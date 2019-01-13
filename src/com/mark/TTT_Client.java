@@ -1,10 +1,12 @@
 package com.mark;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TTT_Client {
@@ -13,35 +15,82 @@ public class TTT_Client {
     private static final String HOST = "localhost";
     private static final int PORT = 9090;
 
-    private static final int WIDTH = 9;
-    private static final int HEIGHT = 6;
-
     // Define the playing board
-    static String[][] board = new String[HEIGHT][WIDTH];
+    private String[][] board;
 
 
     //    Construct a client and connects to the server
-    public TTT_Client(String playerName, String playerChip) throws Exception {
+    public TTT_Client(String playerName) throws Exception {
+        Scanner scanner = new Scanner(System.in);
+        int chipSelection;
+
         // Setup connection to server
         try (Socket socket = new Socket(HOST, PORT)) {
-            System.out.println("Connection status: " + socket.isConnected());
-
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            while(true) {
-                out.println(playerName);
-                out.println(playerChip);
 
-                System.out.println(in.readLine());
-                Scanner scanner = new Scanner(System.in);
-                String blah = scanner.nextLine();
+            System.out.println("Connection status: " + socket.isConnected());
+
+            // Send User name to server
+            out.println(playerName);
+
+            chipSelection = getChipSelection();
+            // Send user chip selection to server
+            out.println(chipSelection);
+
+            // Output players assigned chip
+            String chipResponse = in.readLine();
+            System.out.println(chipResponse);
+
+
+            // Setup the playing board
+            int boardHeight = Integer.parseInt(in.readLine());
+            int boardWidth = Integer.parseInt(in.readLine());
+            setupBoard(boardHeight, boardWidth);
+
+            while(true) {
+                String response = in.readLine();
+                if(response.startsWith("WAITING"))
+                    System.out.println(response);
+                else if(response.startsWith("GAME ON")) {
+                    System.out.println(response);
+                    while(true) {
+                        // Prompt for move
+                        Scanner scanner1 = new Scanner(System.in);
+                        int move = scanner1.nextInt();
+                        out.println(move);
+                        // Display new board
+
+                        // Wait for opponent
+                        // Display new board
+                        // if (win | draw | lose) -> break x2
+                    }
+                }
             }
-            // Response can be "All players connected" OR "WAITING FRO ANOTHER PLAYER"
         }
     }
 
-    private void setupBoard() {
-        for(int i = 0; i<HEIGHT; i++) {
+    private int getChipSelection() {
+        int chipSelection;
+        while (true) {
+            try {
+                System.out.println("\n[ Enter number 1 to play as X's OR 2 to play as O's ]");
+
+                Scanner scanner =new Scanner(System.in);
+                chipSelection = scanner.nextInt();
+                if (chipSelection == 1 || chipSelection == 2)
+                    break;
+                System.out.println(chipSelection + " is an invalid number!");
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid number!");
+            }
+        }
+        return chipSelection;
+    }
+
+    private void setupBoard(int boardHeight, int boardWidth) {
+        board = new String[boardHeight][boardWidth];
+        for(int i = 0; i<boardHeight; i++) {
             Arrays.fill(board[i], "[_]");
         }
     }
@@ -84,15 +133,10 @@ public class TTT_Client {
 
         System.out.println("\n## RULES ##");
         System.out.println("## To win the game you must get FIVE counters in a continuous row. ##\n" +
-                "## Rows can be horizontal, vertical, or diagonal ##\n" + "## ENJOY! ##\n\n");
+                "## Rows can be horizontal, vertical, or diagonal ##\n" + "## ENJOY! ##\n");
         System.out.println("Please Enter your NAME: ");
         String playerName = scanner.nextLine();
-        System.out.println("You have entered " + playerName + "\n");
 
-        System.out.println("Please choose X's or O's: ");
-        playerChip = scanner.nextLine();
-
-        System.out.println("You have entered " + playerChip + "\n");
-        TTT_Client client = new TTT_Client(playerName, playerChip);
+        TTT_Client client = new TTT_Client(playerName);
     }
 }

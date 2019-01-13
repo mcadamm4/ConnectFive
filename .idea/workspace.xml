@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cba4da21-11f0-4fbb-9081-4d62bb2bfb6c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ConnectFive/META-INF/ConnectFive.kotlin_module" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mark/TTT_Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mark/TTT_Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mark/TTT_Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mark/TTT_Server.java" afterDir="false" />
     </list>
@@ -20,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/mark/TTT_Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="55" column="141" selection-start-line="55" selection-start-column="141" selection-end-line="55" selection-end-column="141" />
+            <state relative-caret-position="254">
+              <caret line="90" column="45" lean-forward="true" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -32,11 +33,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mark/TTT_Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="93" column="46" selection-start-line="93" selection-start-column="46" selection-end-line="93" selection-end-column="46" />
+            <state relative-caret-position="249">
+              <caret line="60" column="41" selection-start-line="60" selection-start-column="41" selection-end-line="60" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -58,6 +59,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>Test</find>
+      <find>WAITING</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -69,16 +71,15 @@
         <option value="$PROJECT_DIR$/src/com/mark/Main.java" />
         <option value="$PROJECT_DIR$/src/com/mark/TTT_ServerTest.java" />
         <option value="$PROJECT_DIR$/src/com/mark/TTT_ClientTest.java" />
-        <option value="$PROJECT_DIR$/src/com/mark/TTT_Server.java" />
         <option value="$PROJECT_DIR$/src/com/mark/TTT_Client.java" />
+        <option value="$PROJECT_DIR$/src/com/mark/TTT_Server.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-267" />
-    <option name="y" value="-23" />
-    <option name="width" value="1750" />
-    <option name="height" value="993" />
+    <option name="x" value="-8" />
+    <option name="width" value="977" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -86,8 +87,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -110,6 +109,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -119,10 +120,11 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547255643959" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547406812754" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="create.test.in.the.same.root" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
@@ -224,7 +226,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1547242378053</updated>
-      <workItem from="1547242382526" duration="13111000" />
+      <workItem from="1547242382526" duration="13678000" />
+      <workItem from="1547395623031" duration="9363000" />
     </task>
     <task id="LOCAL-00001" summary="Basic skeleton of client, server and accompanying tests">
       <created>1547244589000</created>
@@ -255,41 +258,41 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13111000" />
+    <option name="totallyTimeSpent" value="23041000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
     <layout>
-      <window_info id="Designer" />
-      <window_info id="Image Layers" />
-      <window_info id="Capture Tool" />
-      <window_info id="UI Designer" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24966443" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25302014" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Messages" weight="0.32960895" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3840782" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3170391" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4036313" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Coverage" side_tool="true" weight="0.23020135" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32960895" />
+      <window_info anchor="bottom" id="Database Changes" order="11" />
+      <window_info anchor="bottom" id="Version Control" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Coverage" order="9" side_tool="true" weight="0.23020135" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,13 +335,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-11.0.1/lib/src.zip!/java.base/java/lang/ref/Reference.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="222" column="6" lean-forward="true" selection-start-line="222" selection-start-column="6" selection-end-line="222" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mark/TTT_ClientTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -352,20 +348,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mark/TTT_Server.java">
+    <entry file="jar://C:/Program Files/Java/jdk-11.0.1/lib/src.zip!/java.base/java/io/PrintStream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="55" column="141" selection-start-line="55" selection-start-column="141" selection-end-line="55" selection-end-column="141" />
+        <state relative-caret-position="138">
+          <caret line="879" column="16" selection-start-line="879" selection-start-column="16" selection-end-line="879" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-11.0.1/lib/src.zip!/java.base/java/lang/ref/Reference.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="230" column="31" selection-start-line="230" selection-start-column="31" selection-end-line="230" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mark/TTT_Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="60" column="41" selection-start-line="60" selection-start-column="41" selection-end-line="60" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mark/TTT_Client.java">
+    <entry file="file://$PROJECT_DIR$/src/com/mark/TTT_Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="93" column="46" selection-start-line="93" selection-start-column="46" selection-end-line="93" selection-end-column="46" />
+        <state relative-caret-position="254">
+          <caret line="90" column="45" lean-forward="true" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
