@@ -17,6 +17,7 @@ public class TTT_Client {
 
     // Define the playing board
     private String[][] board;
+    private String myPlayingChip;
 
     //    Construct a client and connects to the server
     public TTT_Client(String playerName) throws Exception {
@@ -39,6 +40,7 @@ public class TTT_Client {
 
             // Output players assigned chip
             String chipResponse = in.readLine();
+            myPlayingChip = in.readLine();
             System.out.println(chipResponse);
 
 
@@ -51,11 +53,16 @@ public class TTT_Client {
                 String response = in.readLine();
                 if(response.startsWith("WAITING"))
                     System.out.println(response);
-                else if(response.startsWith("GAME ON")) {
+                else if(response.startsWith("GAME_ON")) {
                     System.out.println(response);
+                    String activePlayer = "";
+                    // The game has begun
                     while(true) {
-                        String myMove = in.readLine();
-                        if(myMove.startsWith("MOVE")) {
+                        if(in.ready())
+                            activePlayer = in.readLine();
+
+                        if(activePlayer.startsWith("MAKE_A_MOVE")) {
+                            System.out.println("MAKE YOUR MOVE..");
                             // Prompt for move
                             Scanner scanner1 = new Scanner(System.in);
                             int move = scanner1.nextInt();
@@ -66,17 +73,22 @@ public class TTT_Client {
                             // Get back coords of move
                             int x = Integer.parseInt(in.readLine());
                             int y = Integer.parseInt(in.readLine());
-                            System.out.println("X: " + x + "\n Y: " + y);
+                            System.out.println("X: " + x + " Y: " + y);
                             board[x][y] = "[X]";
 
                             displayBoard();
-                        } else if(myMove.startsWith("OPPONENT_MOVE")) {
-                            int x = Integer.parseInt(in.readLine());
-                            int y = Integer.parseInt(in.readLine());
-                            System.out.println("X: " + x + "\n Y: " + y);
+                            out.flush();
+                        } else {
+                            // Wait for opponents move and display the result
+                            System.out.print("OPPONENTS MOVE...");
+                            System.out.print("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
 
-                            board[x][y] = "[O]";
-                            displayBoard();
+//                            int x = Integer.parseInt(in.readLine());
+//                            int y = Integer.parseInt(in.readLine());
+//                            board[x][y] = "[O]";
+//                            System.out.println("X: " + x + "\n Y: " + y);
+//                            displayBoard();
+//                            }
                         }
                         // Wait for opponent
                         // Display new board

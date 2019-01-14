@@ -23,6 +23,8 @@ public class TTT_Server {
                 // Create two new players for the game and give each a thread
                 ConnectFive.Player playerOne = newGame.new Player(listener.accept());
                 ConnectFive.Player playerTwo = newGame.new Player(listener.accept());
+                playerOne.setOpponent(playerTwo);
+                playerOne.setOpponent(playerOne);
                 playerOne.start();
                 playerTwo.start();
             }
@@ -32,7 +34,8 @@ public class TTT_Server {
 
 class ConnectFive {
 
-    private static String activePlayer = "";
+    private static Player activePlayer;
+    private static int playerCount = 0;
 
     private static final int BOARD_WIDTH = 9;
     private static final int BOARD_HEIGHT = 6;
@@ -58,11 +61,13 @@ class ConnectFive {
         private Socket socket;
 
         private String playerName;
+        private Player opponent;
         private int chipSelection;
         private String chipAssignMessage;
 
         public Player(Socket socket) {
             this.socket = socket;
+            playerCount++;
             try {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
@@ -75,11 +80,14 @@ class ConnectFive {
 
                 //Is this a valid chip and is it available i.e. (Did the first player already choose it)
                 chipAssignMessage = assignChips(playerName, chipSelection);
+                // Send the player a message to tell them what chip they have.
                 out.println(chipAssignMessage);
+                out.println(players[playerCount-1][1]);
 
                 // Set first player to connect as the first to move
-                if(activePlayer.isEmpty())
-                    activePlayer = players[0][1];
+                if(activePlayer == null) {
+                    activePlayer = this;
+                }
 
                 // Send playing board dimensions
                 out.println(BOARD_HEIGHT);
@@ -100,14 +108,14 @@ class ConnectFive {
 
         public void run() {
             try {
-                out.println("GAME ON!");
+                out.println("GAME_ON!");
                 while(true) {
                     // Read in players move
-                    int selectedColumn = Integer.parseInt(in.readLine());
-                    System.out.println("New move: " + selectedColumn);
+                    if(this.equals(activePlayer)) {
+                        out.println("MAKE_A_MOVE");
+                        int selectedColumn = Integer.parseInt(in.readLine());
+                        System.out.println("New move: " + selectedColumn);
 
-                    // Is this move valid ?
-                    if(true) {
                         System.out.println("Valid move");
                         // Is this a winning move ?
                         if(1 == 22 ) {
@@ -118,34 +126,37 @@ class ConnectFive {
                             int[] dropCoords = getDropCoords(selectedColumn);
 
                             // Display new board
-                            for(String[] arr : board) {
-                                for(String str : arr) {
+                            for (String[] arr : board) {
+                                for (String str : arr) {
                                     System.out.print(str);
                                 }
                                 System.out.println();
                             }
 
                             // Update board and send coords to player
-                            board[dropCoords[0]][dropCoords[1]] = "X";
+                            board[dropCoords[0]][dropCoords[1]] = "[X]";
                             out.println(dropCoords[0]);
                             out.println(dropCoords[1]);
 
                             // Display new board
-                            for(String[] arr : board) {
-                                for(String str : arr) {
-                                    System.out.print(str);
-                                }
+                            for (String[] arr : board) {
+                                for (String str : arr)
+                                    System.out.print(str + " ");
                                 System.out.println();
                             }
+                            System.out.println();
+                            activePlayer = this.opponent;
+                            System.out.print(this.playerName);
                         }
                     }
-                    // Wait for opponents move
-                    // Repeat
-                    System.out.println();
                 }
             } catch (Exception e){
-
+                System.out.print("Whoops " + e);
             }
+        }
+
+        public void setOpponent(Player opponent) {
+            this.opponent = opponent;
         }
     }
 
