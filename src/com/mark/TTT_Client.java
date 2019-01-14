@@ -18,7 +18,6 @@ public class TTT_Client {
     // Define the playing board
     private String[][] board;
 
-
     //    Construct a client and connects to the server
     public TTT_Client(String playerName) throws Exception {
         Scanner scanner = new Scanner(System.in);
@@ -43,7 +42,7 @@ public class TTT_Client {
             System.out.println(chipResponse);
 
 
-            // Setup the playing board
+            // Setup the playing board &
             int boardHeight = Integer.parseInt(in.readLine());
             int boardWidth = Integer.parseInt(in.readLine());
             setupBoard(boardHeight, boardWidth);
@@ -55,12 +54,30 @@ public class TTT_Client {
                 else if(response.startsWith("GAME ON")) {
                     System.out.println(response);
                     while(true) {
-                        // Prompt for move
-                        Scanner scanner1 = new Scanner(System.in);
-                        int move = scanner1.nextInt();
-                        out.println(move);
-                        // Display new board
+                        String myMove = in.readLine();
+                        if(myMove.startsWith("MOVE")) {
+                            // Prompt for move
+                            Scanner scanner1 = new Scanner(System.in);
+                            int move = scanner1.nextInt();
+                            out.println(move);
 
+                            System.out.println("Sent move: " + move);
+
+                            // Get back coords of move
+                            int x = Integer.parseInt(in.readLine());
+                            int y = Integer.parseInt(in.readLine());
+                            System.out.println("X: " + x + "\n Y: " + y);
+                            board[x][y] = "[X]";
+
+                            displayBoard();
+                        } else if(myMove.startsWith("OPPONENT_MOVE")) {
+                            int x = Integer.parseInt(in.readLine());
+                            int y = Integer.parseInt(in.readLine());
+                            System.out.println("X: " + x + "\n Y: " + y);
+
+                            board[x][y] = "[O]";
+                            displayBoard();
+                        }
                         // Wait for opponent
                         // Display new board
                         // if (win | draw | lose) -> break x2
@@ -136,7 +153,6 @@ public class TTT_Client {
                 "## Rows can be horizontal, vertical, or diagonal ##\n" + "## ENJOY! ##\n");
         System.out.println("Please Enter your NAME: ");
         String playerName = scanner.nextLine();
-
         TTT_Client client = new TTT_Client(playerName);
     }
 }

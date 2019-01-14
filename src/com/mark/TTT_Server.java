@@ -6,8 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 public class TTT_Server {
     private static final String HOST = "localhost";
@@ -37,8 +36,21 @@ class ConnectFive {
 
     private static final int BOARD_WIDTH = 9;
     private static final int BOARD_HEIGHT = 6;
+    private static final int CONNECT_FIVE = 5;
 
     private static String[][] players = new String[2][2];
+    private static String[][] board;
+    private static int[][] lastDropCoords; //Coordinates of the last chip dropped in a column
+
+    public ConnectFive() {
+        setupBoard();
+        lastDropCoords = new int[BOARD_WIDTH-1][2];
+        for(int i = 0; i < BOARD_WIDTH-1; i++) {
+            // Add lastDrop coords in the form (x, y) - x being the row and y the column
+            // Decrement the x value i.e. the height of each lastDrop as chips are added
+            lastDropCoords[i] = new int[]{BOARD_HEIGHT, i};
+        }
+    }
 
     class Player extends Thread {
         private PrintWriter out;
@@ -85,17 +97,87 @@ class ConnectFive {
                 System.out.println("OOps");
             }
         }
+
         public void run() {
             try {
                 out.println("GAME ON!");
                 while(true) {
-                    String input = in.readLine();
-                    System.out.println(input);
+                    // Read in players move
+                    int selectedColumn = Integer.parseInt(in.readLine());
+                    System.out.println("New move: " + selectedColumn);
+
+                    // Is this move valid ?
+                    if(true) {
+                        System.out.println("Valid move");
+                        // Is this a winning move ?
+                        if(1 == 22 ) {
+                            String message = "WINNER";
+                        } else {
+                            System.out.println("Update board");
+                            // Send new board to opponent
+                            int[] dropCoords = getDropCoords(selectedColumn);
+
+                            // Display new board
+                            for(String[] arr : board) {
+                                for(String str : arr) {
+                                    System.out.print(str);
+                                }
+                                System.out.println();
+                            }
+
+                            // Update board and send coords to player
+                            board[dropCoords[0]][dropCoords[1]] = "X";
+                            out.println(dropCoords[0]);
+                            out.println(dropCoords[1]);
+
+                            // Display new board
+                            for(String[] arr : board) {
+                                for(String str : arr) {
+                                    System.out.print(str);
+                                }
+                                System.out.println();
+                            }
+                        }
+                    }
+                    // Wait for opponents move
+                    // Repeat
+                    System.out.println();
                 }
             } catch (Exception e){
 
             }
         }
+    }
+
+    private static void setupBoard() {
+        board = new String[BOARD_HEIGHT][BOARD_WIDTH];
+        for(int i = 0; i<BOARD_HEIGHT; i++) {
+            Arrays.fill(board[i], "[_]");
+        }
+    }
+
+    private boolean isWinningMove() {
+        // Check the last chip added, is this a winning move?
+        return false;
+    }
+
+    private int[] getDropCoords(int selectedColumn) {
+        selectedColumn -= 1; // Board is zero based
+        int[] lastDropForColumn = lastDropCoords[selectedColumn];
+        int[] newDropCoords = {lastDropForColumn[0]-1, lastDropForColumn[1]};
+        lastDropCoords[selectedColumn] = newDropCoords;
+        return newDropCoords;
+    }
+
+    private boolean isValidMove(int selectedColumn) {
+        int[] dropCoords = getDropCoords(selectedColumn);
+        // Is the move within the dimensions of the board ?
+        if(dropCoords[0]<0) {
+            //Column is full
+        }
+        // If is valid, then update the board with this new move
+        // Record the position of this latest chip so can check for winner
+        return true;
     }
 
     public String assignChips(String playerName, int chipSelection) {
