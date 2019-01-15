@@ -13,9 +13,13 @@ public class TTT_Client {
     private final PrintWriter out;
     private static final String HOST = "localhost";
     private static final int PORT = 9090;
+    private static int CONNECT_NUM;
 
     // Define the playing board
     private String[][] board;
+
+    private String playerChip;
+    private String opponentChip;
 
     //    Construct a client and connects to the server
     public TTT_Client(String playerName) throws Exception {
@@ -31,17 +35,21 @@ public class TTT_Client {
             // Send User name to server
             out.println(playerName);
 
-            // Send user chip selection to server
+            // Send user chip preference to server - ([1 = X], [2 = O])
             chipSelection = getChipSelection();
             out.println(chipSelection);
 
             // Output players assigned chip
             String chipResponse = in.readLine();
+            playerChip = in.readLine();
+            opponentChip = (playerChip.equals("X") ? "O" : "X");
             System.out.println(chipResponse);
 
             // Setup the playing board with specified dimensions from server
             int boardHeight = Integer.parseInt(in.readLine());
             int boardWidth = Integer.parseInt(in.readLine());
+            // How many counters for winning row (Rules of the game can be easily changed via the server)
+            CONNECT_NUM = Integer.parseInt(in.readLine());
             setupBoard(boardHeight, boardWidth);
 
 
@@ -52,55 +60,67 @@ public class TTT_Client {
                         System.out.println(response);
                     else if (response.startsWith("GAME_ON")) {
                         System.out.println(response.substring(8));
-                        String instructions = "";
+                        break;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("ERROR: " + e);
+                } catch (Exception e) {
+                    System.out.println("Error trying to find opponent...");
+                }
+            }
 
-                        while (true) {
-                            if (in.ready())
-                                instructions = in.readLine();
+            String instructions = "";
 
-                            if (instructions.startsWith("MAKE_A_MOVE")) {
-                                System.out.println("MAKE YOUR MOVE..");
-                                // Prompt for move
-                                Scanner scanner1 = new Scanner(System.in);
-                                int move = scanner1.nextInt();
-                                out.println(move);
+            // Ready to begin game
+            while (true) {
+                if (in.ready()) {
+                    instructions = in.readLine();
 
-                                System.out.println("Sent move: " + move);
+                    if (instructions.startsWith("MAKE_A_MOVE")) {
+                        try {
+                            displayBoard();
 
-                                try {
-                                    String valid_Move = in.readLine();
-                                    if(valid_Move.startsWith("INVALID_MOVE")) {
-                                        continue;
-                                    } else if (valid_Move.startsWith("VALID_MOVE")) {
-                                        // Get back coords of move
-                                        int x = Integer.parseInt(in.readLine());
-                                        int y = Integer.parseInt(in.readLine());
-                                        System.out.println("X: " + x + " Y: " + y);
-                                        board[x][y] = "[X]";
-                                        displayBoard();
-                                        System.out.println("Opponents move, please wait!");
-                                    }
-                                } catch (Exception e) {
-                                    System.out.println(e);
-                                }
-                            } else if (instructions.startsWith("NOT_YOUR_TURN")) {
-                                System.out.print("Opponent");
-                                System.out.print("\b\b\b\b\b\b\b\b\b\b");
-                            } if(instructions.startsWith("NEW_MOVE")) {
-                                // Get back coords of opponents move
+                            // Prompt for move
+                            System.out.println("IT IS YOUR TURN, ENTER A NUMBER BETWEEN [1-9]!");
+                            Scanner scanner1 = new Scanner(System.in);
+                            int move = scanner1.nextInt();
+                            out.println(move);
+
+                            String valid_Move = in.readLine();
+
+                            if (valid_Move.startsWith("INVALID_MOVE")) {
+                                System.out.println("INVALID MOVE, PLEASE ENTER A NUMBER BETWEEN [1-9]!");
+                                continue;
+                            } else if (valid_Move.startsWith("VALID_MOVE")) {
+                                // Get back coords of move
                                 int x = Integer.parseInt(in.readLine());
                                 int y = Integer.parseInt(in.readLine());
-                                System.out.println("Opponents move -> X: " + x + " Y: " + y);
-                                board[x][y] = "[H]";
+
+                                board[x][y] = String.format("[%s]", playerChip);
+
                                 displayBoard();
                                 System.out.println("Opponents move, please wait!");
                             }
+                        } catch (Exception e) {
+                            System.out.println(e);
                         }
+                    } else if (instructions.startsWith("NOT_YOUR_TURN")) {
+                        System.out.print("...");
+                        System.out.print("\b\b\b");
+                    } else if (instructions.startsWith("OPPONENT_MOVED")) {
+                        int x = Integer.parseInt(String.valueOf(instructions.charAt(15)));
+                        int y = Integer.parseInt(String.valueOf(instructions.charAt(17)));
+
+                        // Get back coords of opponents move
+                        System.out.println("Opponents move -> X: " + x + " Y: " + y);
+                        board[x][y] = String.format("[%s]", opponentChip);
+                    } else if (instructions.startsWith("WINNER")) {
+                        System.out.println("WINNER FOUND");
+                        break;
+                    } else if (instructions.startsWith("GAME_OVER")) {
+                        System.out.print(instructions);
+                        break;
                     }
-                } catch(NumberFormatException e) {
-                    System.out.println("ERROR: " + e);
-                } catch (Exception e) {
-                    System.out.println("Somethings gone wrong pal!\n" + e);
                 }
             }
         }
