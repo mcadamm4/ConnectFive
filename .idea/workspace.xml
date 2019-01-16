@@ -3,13 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cba4da21-11f0-4fbb-9081-4d62bb2bfb6c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ConnectFive/com/mark/Tests/TestOne/MockSystemInput.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mark/TTT_Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mark/CF_Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mark/TTT_ClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mark/CF_ClientTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mark/TTT_Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mark/CF_Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mark/TTT_ServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mark/CF_ServerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mark/Tests/TestOne/MockInputFromServer.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mark/Tests/TestOne/MockInputFromUser.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ConnectFive/com/mark/Tests/StalemateTest/Output/OutputToUser.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ConnectFive/com/mark/Tests/StalemateTest/Output/OutputToUser.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,13 +13,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/ConnectFive$CF_ClientTest.ic" NAME="CF_ClientTest Coverage Results" MODIFIED="1547675693502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/ConnectFive$CF_ClientTest.ic" NAME="CF_ClientTest Coverage Results" MODIFIED="1547681384684" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.mark.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/ConnectFive$Main.ic" NAME="Main Coverage Results" MODIFIED="1547675801210" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/ConnectFive$com_mark_in_ConnectFive.ic" NAME="com.mark in ConnectFive Coverage Results" MODIFIED="1547243467601" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.mark.*</FILTER>
     </SUITE>
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="247" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -53,7 +50,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/mark/CF_Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
+            <state relative-caret-position="-1488">
               <caret line="180" column="26" selection-start-line="180" selection-start-column="26" selection-end-line="180" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -72,8 +69,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mark/CF_ClientTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="203" selection-start-line="203" selection-end-line="203" />
+            <state relative-caret-position="576">
+              <caret line="208" column="33" lean-forward="true" selection-start-line="208" selection-start-column="33" selection-end-line="212" selection-end-column="31" />
               <folding>
                 <element signature="e#172#196#0" expanded="true" />
               </folding>
@@ -128,8 +125,8 @@
       <find>find</find>
       <find>declareWinnerLoser</find>
       <find>crum</find>
-      <find>crumb</find>
       <find>OPPONENT_QUI</find>
+      <find>crumb</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -170,8 +167,8 @@
         <option value="$PROJECT_DIR$/src/com/mark/Tests/GameOverTest/Input/MockInputFromUser.txt" />
         <option value="$PROJECT_DIR$/src/com/mark/Tests/GameOverTest/Input/MockInputFromServer.txt" />
         <option value="$PROJECT_DIR$/src/com/mark/Tests/StalemateTest/Input/MockInputFromServer.txt" />
-        <option value="$PROJECT_DIR$/src/com/mark/CF_ClientTest.java" />
         <option value="$PROJECT_DIR$/src/com/mark/CF_Client.java" />
+        <option value="$PROJECT_DIR$/src/com/mark/CF_ClientTest.java" />
       </list>
     </option>
   </component>
@@ -217,32 +214,6 @@
               <item name="mark" type="462c0819:PsiDirectoryNode" />
               <item name="Tests" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ConnectFive" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ConnectFive" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="mark" type="462c0819:PsiDirectoryNode" />
-              <item name="Tests" type="462c0819:PsiDirectoryNode" />
-              <item name="StalemateTest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ConnectFive" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ConnectFive" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="mark" type="462c0819:PsiDirectoryNode" />
-              <item name="Tests" type="462c0819:PsiDirectoryNode" />
-              <item name="StalemateTest" type="462c0819:PsiDirectoryNode" />
-              <item name="Input" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ConnectFive" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ConnectFive" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="mark" type="462c0819:PsiDirectoryNode" />
-              <item name="Tests" type="462c0819:PsiDirectoryNode" />
-              <item name="StalemateTest" type="462c0819:PsiDirectoryNode" />
-              <item name="Output" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -257,7 +228,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547681314894" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547681611058" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="create.test.in.the.same.root" value="true" />
@@ -408,7 +379,7 @@
       <workItem from="1547395623031" duration="25121000" />
       <workItem from="1547486124675" duration="22365000" />
       <workItem from="1547579349660" duration="17407000" />
-      <workItem from="1547657695250" duration="19853000" />
+      <workItem from="1547657695250" duration="20110000" />
     </task>
     <task id="LOCAL-00001" summary="Basic skeleton of client, server and accompanying tests">
       <created>1547244589000</created>
@@ -428,12 +399,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CF_ClientTest_opponentQuitTest - 2019.01.16 at 23h 17m 48s.xml">
-      <configuration name="CF_ClientTest.opponentQuitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CF_ClientTest_opponentQuitTest - 2019.01.16 at 23h 18m 14s.xml">
-      <configuration name="CF_ClientTest.opponentQuitTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CF_ClientTest_opponentQuitTest - 2019.01.16 at 23h 19m 38s.xml">
       <configuration name="CF_ClientTest.opponentQuitTest" configurationId="JUnit" />
     </history-entry>
@@ -458,9 +423,15 @@
     <history-entry file="CF_ClientTest - 2019.01.16 at 23h 27m 09s.xml">
       <configuration name="CF_ClientTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CF_ClientTest - 2019.01.16 at 23h 28m 38s.xml">
+      <configuration name="CF_ClientTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CF_ClientTest - 2019.01.16 at 23h 30m 09s.xml">
+      <configuration name="CF_ClientTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98424000" />
+    <option name="totallyTimeSpent" value="98681000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -473,9 +444,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2147651" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2147651" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -484,7 +454,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32960895" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.34217876" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.5405028" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3282123" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -505,7 +475,7 @@
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info anchor="right" id="Coverage" order="9" side_tool="true" weight="0.43288592" />
+      <window_info anchor="right" id="Coverage" order="9" side_tool="true" visible="true" weight="0.76510066" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14966443" />
@@ -844,22 +814,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mark/Tests/StalemateTest/Output/OutputToUser.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mark/CF_ClientTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="203" selection-start-line="203" selection-end-line="203" />
+        <state relative-caret-position="576">
+          <caret line="208" column="33" lean-forward="true" selection-start-line="208" selection-start-column="33" selection-end-line="212" selection-end-column="31" />
           <folding>
             <element signature="e#172#196#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mark/Tests/StalemateTest/Output/OutputToUser.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mark/CF_Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
+        <state relative-caret-position="-1488">
           <caret line="180" column="26" selection-start-line="180" selection-start-column="26" selection-end-line="180" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
