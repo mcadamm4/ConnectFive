@@ -3,16 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cba4da21-11f0-4fbb-9081-4d62bb2bfb6c" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/src/ManualTests/BackwardDiagonalRowTest.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ManualTests/ForwardDiagonalRowTest.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ManualTests/HorizontalRowTest.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ManualTests/VerticalRowTest.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mark/ConnectFiveTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/mark/Tests/TestOne/input2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConnectFive.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ConnectFive.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mark/TTT_Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mark/TTT_Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mark/TTT_ClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mark/TTT_ClientTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mark/TTT_Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mark/TTT_Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/mark/TTT_ServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mark/TTT_ServerTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -58,7 +49,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/mark/TTT_ServerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="379">
+            <state relative-caret-position="430">
               <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -186,7 +177,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547610192708" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547610555802" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="create.test.in.the.same.root" value="true" />
@@ -324,7 +315,7 @@
       <workItem from="1547242382526" duration="13678000" />
       <workItem from="1547395623031" duration="25121000" />
       <workItem from="1547486124675" duration="22365000" />
-      <workItem from="1547579349660" duration="16670000" />
+      <workItem from="1547579349660" duration="17099000" />
     </task>
     <task id="LOCAL-00001" summary="Basic skeleton of client, server and accompanying tests">
       <created>1547244589000</created>
@@ -344,9 +335,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TTT_ClientTest - 2019.01.11 at 21h 50m 18s.xml">
-      <configuration name="TTT_ClientTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="com_mark_in_ConnectFive - 2019.01.11 at 21h 51m 27s.xml">
       <configuration name="com.mark in ConnectFive" configurationId="JUnit" />
     </history-entry>
@@ -374,9 +362,12 @@
     <history-entry file="TTT_ServerTest_testTest - 2019.01.16 at 03h 39m 40s.xml">
       <configuration name="TTT_ServerTest.testTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="TTT_ServerTest_testTest - 2019.01.16 at 03h 42m 10s.xml">
+      <configuration name="TTT_ServerTest.testTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77834000" />
+    <option name="totallyTimeSpent" value="78263000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -389,7 +380,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.147651" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -401,7 +391,7 @@
       <window_info anchor="bottom" id="Duplicate detector" weight="0.32960895" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32960895" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.34357542" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.34357542" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3282123" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -600,17 +590,6 @@
     <entry file="file://$PROJECT_DIR$/src/com/mark/Tests/TestOne/output2.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mark/TTT_Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#6580#6581#0" expanded="true" />
-            <element signature="e#6628#6629#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mark/Tests/TestOne/output1.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -625,9 +604,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mark/TTT_Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="e#6580#6581#0" expanded="true" />
+            <element signature="e#6628#6629#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mark/TTT_ServerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
+        <state relative-caret-position="430">
           <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
