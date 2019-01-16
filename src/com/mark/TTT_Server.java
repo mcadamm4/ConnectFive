@@ -46,7 +46,7 @@ class ConnectFive {
     private static String[][] players = new String[2][2];
     private static String[][] board;
     private static int[][] lastDropCoords; //Coordinates of the last chip dropped in a column
-    private static int[] winningRowCoords;
+    private static int[][] winningRowCoords;
 
     ConnectFive() {
         setupBoard();
@@ -59,7 +59,7 @@ class ConnectFive {
         }
 
         // Record winning row and send to client to highlight
-        winningRowCoords = new int[CONNECT_NUM-1];
+        winningRowCoords = new int[CONNECT_NUM][2];
     }
 
     class Player extends Thread {
@@ -142,13 +142,11 @@ class ConnectFive {
 
                         if (isWinningMove(dropCoords, this.playerChip)) {
                             // Player has won the game
-                            out.println("WINNER");
-//                            out.println(playerName);
+                            out.println("WINNER " + dropCoords[0] + " " +  dropCoords[1] + " " + playerName);
+                            // Inform opponent
+                            opponent.out.println("WINNER " + dropCoords[0] + " " + dropCoords[1] + " " + playerName);
 
-                            // Send back coords of winning row to both players
-//                            for(int i = 0; i < winningRowCoords.length; i++)
-//                                out.println(winningRowCoords[i]);
-//                            gameInProgress = false;
+                            break;
                         } else {
                             // Move was valid, send back coords to client
                             out.println("VALID_MOVE");
@@ -205,30 +203,104 @@ class ConnectFive {
     private boolean isWinningMove(int[] dropCoords, String playerChip) {
         int x = dropCoords[0];
         int y = dropCoords[1];
-        return checkVertical(x, y, playerChip) || checkHorizontal(x, y, playerChip) ||
+        return checkVertical(x, y, playerChip) || checkHorizontal(x, playerChip) ||
                 checkForwardDiagonal(x, y, playerChip) || checkBackwardDiagonal(x, y, playerChip);
     }
 
     private boolean checkBackwardDiagonal(int x, int y, String playerChip) {
-        return false;
+        int rowCount = 1;
+        int x1 = x;
+        int y1 = y;
+        for(int i = 0; i < CONNECT_NUM; i++) {
+            // Forward & Up
+            try {
+                String chip = String.valueOf(board[++x][--y].charAt(1));
+                if (!chip.equals(playerChip)) {
+                    break;
+                }
+                rowCount++; // Found one of my chips, add it to count and check the next slot
+            } catch (IndexOutOfBoundsException e) {
+                break;
+            }
+        }
+        for(int i = 0; i < CONNECT_NUM; i++) {
+            // Backwards & Down
+            try {
+                String chip = String.valueOf(board[--x1][++y1].charAt(1));
+                if (!chip.equals(playerChip)) {
+                    break;
+                }
+                rowCount++; // Found one of my chips, add it to count and check the next slot
+            } catch (IndexOutOfBoundsException e) {
+                break;
+            }
+        }
+        return (rowCount == CONNECT_NUM);
     }
 
     private boolean checkForwardDiagonal(int x, int y, String playerChip) {
-        return false;
+        int rowCount = 1;
+        int x1 = x;
+        int y1 = y;
+        for(int i = 0; i < CONNECT_NUM; i++) {
+            // Backwards & Up
+            try {
+                String chip = String.valueOf(board[--x][--y].charAt(1));
+                if (!chip.equals(playerChip)) {
+                    break;
+                }
+                rowCount++; // Found one of my chips, add it to count and check the next slot
+            } catch (IndexOutOfBoundsException e) {
+                break;
+            }
+        }
+        for(int i = 0; i < CONNECT_NUM; i++) {
+            // Forward & Down
+            try {
+                String chip = String.valueOf(board[++x1][++y1].charAt(1));
+                if (!chip.equals(playerChip)) {
+                    break;
+                }
+                rowCount++; // Found one of my chips, add it to count and check the next slot
+            } catch (IndexOutOfBoundsException e) {
+                break;
+            }
+        }
+        return (rowCount == CONNECT_NUM);
     }
 
-    private boolean checkHorizontal(int x, int y, String playerChip) {
-        return false;
+    private boolean checkHorizontal(int x, String playerChip) {
+        // Check the entire row for enough consecutive chips for a win
+        int rowCount = 0;
+        for(int i = 0; i < BOARD_WIDTH; i++) {
+            try {
+                String chip = String.valueOf(board[x][i].charAt(1));
+                if(!chip.equals(playerChip)) {
+                    rowCount = 0;
+                    continue;
+                }
+                rowCount++;
+                if (rowCount == CONNECT_NUM)
+                    return true;
+            } catch(IndexOutOfBoundsException e) {
+                break;
+            }
+        }
+        return (rowCount == CONNECT_NUM);
     }
 
     private boolean checkVertical(int x, int y, String playerChip) {
-        if(x <= (BOARD_HEIGHT - CONNECT_NUM)) { // Minimum height x must be for winning row downwards
-            for(int i = 1; i <= CONNECT_NUM; i++) {
-                String str = board[x][y].substring(1,2);
-                if(!str.equals(playerChip)) {
-                    return false; // Found an opponents chip
+        // Minimum height x must be for vertical win
+        if(x <= (BOARD_HEIGHT - CONNECT_NUM)) {
+            for(int i = 0; i < CONNECT_NUM; i++) {
+                try {
+                    String str = board[++x][y].substring(1, 2);
+                    if (!str.equals(playerChip))
+                        return false; // Found an opponents chip
+                     winningRowCoords[i] = new int[]{x,y};
+                } catch (IndexOutOfBoundsException e) {
+                    break;
                 }
-                x++;
             }
             return true;
         }

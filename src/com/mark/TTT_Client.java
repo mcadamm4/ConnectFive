@@ -1,6 +1,7 @@
 package com.mark;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -9,11 +10,13 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TTT_Client {
-    private final BufferedReader in;
-    private final PrintWriter out;
+    private BufferedReader in;
+    private PrintWriter out;
     private static final String HOST = "localhost";
     private static final int PORT = 9090;
     private static int CONNECT_NUM;
+    private final PrintWriter writer;
+    private final Scanner scanner;
 
     // Define the playing board
     private String[][] board;
@@ -22,15 +25,26 @@ public class TTT_Client {
     private String opponentChip;
 
     //    Construct a client and connects to the server
-    public TTT_Client(String playerName) throws Exception {
+    TTT_Client(Scanner scanner, PrintWriter writer) throws Exception {
+        this.scanner = scanner;
+        this.writer = writer;
+        getGameReady();
+    }
+
+    private void getGameReady() throws IOException {
         int chipSelection;
+        writer.println("\n## RULES ##");
+        writer.println("## To win the game you must get FIVE counters in a continuous row. ##\n" +
+                "## Rows can be horizontal, vertical, or diagonal ##\n" + "## ENJOY! ##\n");
+        writer.println("Please Enter your NAME: ");
+        String playerName = scanner.nextLine();
 
         // Setup connection to server
         try (Socket socket = new Socket(HOST, PORT)) {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
 
-            System.out.println("Connection status: " + socket.isConnected());
+            writer.println("Connection status: " + socket.isConnected());
 
             // Send User name to server
             out.println(playerName);
@@ -39,106 +53,140 @@ public class TTT_Client {
             chipSelection = getChipSelection();
             out.println(chipSelection);
 
-            // Output players assigned chip
             String chipResponse = in.readLine();
-            playerChip = in.readLine();
-            opponentChip = (playerChip.equals("X") ? "O" : "X");
-            System.out.println(chipResponse);
+            writer.println(chipResponse);
+
+            setupPlayersChips();
 
             // Setup the playing board with specified dimensions from server
             int boardHeight = Integer.parseInt(in.readLine());
             int boardWidth = Integer.parseInt(in.readLine());
-            // How many counters for winning row (Rules of the game can be easily changed via the server)
-            CONNECT_NUM = Integer.parseInt(in.readLine());
             setupBoard(boardHeight, boardWidth);
 
+            CONNECT_NUM = Integer.parseInt(in.readLine());
 
-            while(true) {
-                try {
-                    String response = in.readLine();
-                    if (response.startsWith("WAITING"))
-                        System.out.println(response);
-                    else if (response.startsWith("GAME_ON")) {
-                        System.out.println(response.substring(8));
-                        break;
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("ERROR: " + e);
-                } catch (Exception e) {
-                    System.out.println("Error trying to find opponent...");
-                }
-            }
+            waitForOpponent();
+            displayBoard();
+            playGame();
+        } catch (Exception e) {
+            writer.println("COULD NOT CONNECT TO SERVER");
+        }
+    }
 
-            String instructions = "";
+    private void setupPlayersChips() throws IOException {
+        // Read assigned chip
+        playerChip = in.readLine();
+        opponentChip = playerChip.equals("X") ? "O" : "X";
+    }
 
-            // Ready to begin game
-            while (true) {
-                if (in.ready()) {
-                    instructions = in.readLine();
+    private void playGame() throws IOException {
+        String instructions;
+        while (true) {
+            if (in.ready()) {
+                instructions = in.readLine();
 
-                    if (instructions.startsWith("MAKE_A_MOVE")) {
-                        try {
+                if (instructions.startsWith("MAKE_A_MOVE")) {
+                    try {
+                        // Prompt for move
+                        writer.println("IT IS YOUR TURN, ENTER A NUMBER BETWEEN [1-9]! - YOU ARE " + playerChip + "'s");
+                        Scanner scanner1 = new Scanner(System.in);
+                        int move = scanner1.nextInt();
+                        out.println(move);
+
+                        // Valid move, Invalid move or Winning move
+                        String playerMoveResponse = in.readLine();
+
+                        if (playerMoveResponse.startsWith("INVALID_MOVE")) {
+                            writer.println("INVALID MOVE, PLEASE ENTER A NUMBER BETWEEN [1-9]!");
+                            continue;
+                        } else if (playerMoveResponse.startsWith("VALID_MOVE")) {
+                            // Get back coords of move
+                            int x = Integer.parseInt(in.readLine());
+                            int y = Integer.parseInt(in.readLine());
+
+                            updateBoard(x, y, playerChip);
                             displayBoard();
+                            writer.println("Opponents move, please wait!\n");
 
-                            // Prompt for move
-                            System.out.println("IT IS YOUR TURN, ENTER A NUMBER BETWEEN [1-9]!");
-                            Scanner scanner1 = new Scanner(System.in);
-                            int move = scanner1.nextInt();
-                            out.println(move);
-
-                            String valid_Move = in.readLine();
-
-                            if (valid_Move.startsWith("INVALID_MOVE")) {
-                                System.out.println("INVALID MOVE, PLEASE ENTER A NUMBER BETWEEN [1-9]!");
-                                continue;
-                            } else if (valid_Move.startsWith("VALID_MOVE")) {
-                                // Get back coords of move
-                                int x = Integer.parseInt(in.readLine());
-                                int y = Integer.parseInt(in.readLine());
-
-                                board[x][y] = String.format("[%s]", playerChip);
-
-                                displayBoard();
-                                System.out.println("Opponents move, please wait!");
-                            }
-                        } catch (Exception e) {
-                            System.out.println(e);
+                        } else if (playerMoveResponse.startsWith("WINNER")) {
+                            String message = "\n  CONGRATULATIONS!! \nYou have won the game, %s!!";
+                            declareWinnerLoser(playerMoveResponse, playerChip, message);
+                            break;
                         }
-                    } else if (instructions.startsWith("NOT_YOUR_TURN")) {
-                        System.out.print("...");
-                        System.out.print("\b\b\b");
-                    } else if (instructions.startsWith("OPPONENT_MOVED")) {
-                        int x = Integer.parseInt(String.valueOf(instructions.charAt(15)));
-                        int y = Integer.parseInt(String.valueOf(instructions.charAt(17)));
-
-                        // Get back coords of opponents move
-                        System.out.println("Opponents move -> X: " + x + " Y: " + y);
-                        board[x][y] = String.format("[%s]", opponentChip);
-                    } else if (instructions.startsWith("WINNER")) {
-                        System.out.println("WINNER FOUND");
-                        break;
-                    } else if (instructions.startsWith("GAME_OVER")) {
-                        System.out.print(instructions);
-                        break;
+                    } catch (Exception e) {
+                        writer.println(e);
                     }
+
+                } else if (instructions.startsWith("NOT_YOUR_TURN")) {
+                    System.out.print("...");
+                    System.out.print("\b\b\b");
+
+                } else if (instructions.startsWith("OPPONENT_MOVED")) {
+                    int x = Integer.parseInt(String.valueOf(instructions.charAt(15)));
+                    int y = Integer.parseInt(String.valueOf(instructions.charAt(17)));
+
+                    // Get back coords of opponents move
+                    updateBoard(x, y, opponentChip);
+                    displayBoard();
+
+                } else if (instructions.startsWith("WINNER")) {
+                    String message = "\n  YOU LOOOOOSE!! \n%s has won the game ya crumb!!";
+                    declareWinnerLoser(instructions, opponentChip, message);
+                    break;
+
+                } else if (instructions.startsWith("GAME_OVER")) {
+                    System.out.print(instructions);
+                    break;
                 }
             }
         }
+    }
+
+    private void declareWinnerLoser(String playerMoveResponse, String playerChip, String message) {
+        int x = Integer.parseInt(String.valueOf(playerMoveResponse.charAt(7)));
+        int y = Integer.parseInt(String.valueOf(playerMoveResponse.charAt(9)));
+        String winnerName = playerMoveResponse.substring(11);
+
+        updateBoard(x, y, playerChip);
+        displayBoard();
+        writer.println(String.format(message, winnerName));
+    }
+
+    private void waitForOpponent() {
+        while(true) {
+            try {
+                String response = in.readLine();
+                if (response.startsWith("WAITING"))
+                    writer.println(response);
+                else if (response.startsWith("GAME_ON")) {
+                    writer.println(response.substring(8));
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                writer.println("ERROR: " + e);
+            } catch (Exception e) {
+                writer.println("Error trying to find opponent...");
+            }
+        }
+    }
+
+    private void updateBoard(int x, int y, String playerChip) {
+        board[x][y] = String.format("[%s]", playerChip);
     }
 
     private int getChipSelection() {
         int chipSelection;
         while (true) {
             try {
-                System.out.println("\n[ Enter number 1 to play as X's OR 2 to play as O's ]");
+                writer.println("\n[ Enter number 1 to play as X's OR 2 to play as O's ]");
 
                 Scanner scanner =new Scanner(System.in);
                 chipSelection = scanner.nextInt();
                 if (chipSelection == 1 || chipSelection == 2)
                     break;
-                System.out.println(chipSelection + " is an invalid number!");
+                writer.println(chipSelection + " is an invalid number!");
             } catch (InputMismatchException e) {
-                System.out.println("Please enter a valid number!");
+                writer.println("Please enter a valid number!");
             }
         }
         return chipSelection;
@@ -152,45 +200,18 @@ public class TTT_Client {
     }
 
     private void displayBoard() {
+        writer.println();
         for(String[] arr : board) {
             for(String str : arr)
-                System.out.print(str + " ");
-            System.out.println();
+                writer.print(str + " ");
+            writer.println();
         }
-    }
-
-    private void updateBoard(int coords) {
-
-    }
-
-    private void playGame() {
-        String response;
-        try {
-            response = in.readLine();
-
-            // Waiting for another player?
-
-            // All players connected
-            // Your opponent is x
-            // Display Empty grid
-            // Enter [1- 9]
-            // Display new grid
-            // Opponents move, please wait
-            // Display new grid
-//            updateBoard(5);
-            // Please make your move
-
-        } catch(Exception e) {}
     }
 
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
+        PrintWriter writer = new PrintWriter(System.out, true);
 
-        System.out.println("\n## RULES ##");
-        System.out.println("## To win the game you must get FIVE counters in a continuous row. ##\n" +
-                "## Rows can be horizontal, vertical, or diagonal ##\n" + "## ENJOY! ##\n");
-        System.out.println("Please Enter your NAME: ");
-        String playerName = scanner.nextLine();
-        TTT_Client client = new TTT_Client(playerName);
+        TTT_Client client = new TTT_Client(scanner, writer);
     }
 }
