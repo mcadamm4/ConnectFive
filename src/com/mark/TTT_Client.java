@@ -25,13 +25,34 @@ public class TTT_Client {
     private String opponentChip;
 
     //    Construct a client and connects to the server
-    TTT_Client(Scanner scanner, PrintWriter writer) throws Exception {
-        this.scanner = scanner;
-        this.writer = writer;
-        getGameReady();
+    TTT_Client() {
+        this.scanner = new Scanner(System.in);
+        this.writer = new PrintWriter(System.out, true);
+        // Setup connection to server
+        try (Socket socket = new Socket(HOST, PORT)) {
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+            getGameReady();
+        } catch (Exception e) {
+            writer.println("COULD NOT CONNECT TO SERVER!!");
+        }
     }
 
-    private void getGameReady() throws IOException {
+    TTT_Client(Scanner scanner, PrintWriter writer, BufferedReader inputStream, PrintWriter outputStream) {
+        this.scanner = scanner;
+        this.writer = writer;
+        // Mock server connection for testing purposes
+        try {
+            in = inputStream;
+            out = outputStream;
+
+            getGameReady();
+        } catch (Exception e) {
+            writer.println("ERROR RUNNING CLIENT TEST VERSION!!");
+        }
+    }
+
+    private void getGameReady() throws  IOException {
         int chipSelection;
         writer.println("\n## RULES ##");
         writer.println("## To win the game you must get FIVE counters in a continuous row. ##\n" +
@@ -39,13 +60,7 @@ public class TTT_Client {
         writer.println("Please Enter your NAME: ");
         String playerName = scanner.nextLine();
 
-        // Setup connection to server
-        try (Socket socket = new Socket(HOST, PORT)) {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-
-            writer.println("Connection status: " + socket.isConnected());
-
+        try {
             // Send User name to server
             out.println(playerName);
 
@@ -68,8 +83,8 @@ public class TTT_Client {
             waitForOpponent();
             displayBoard();
             playGame();
-        } catch (Exception e) {
-            writer.println("COULD NOT CONNECT TO SERVER");
+        } catch (IOException io) {
+            System.out.println("ERROR WHEN READING OR WRITING:\n" + io);
         }
     }
 
@@ -209,9 +224,6 @@ public class TTT_Client {
     }
 
     public static void main(String[] args) throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        PrintWriter writer = new PrintWriter(System.out, true);
-
-        TTT_Client client = new TTT_Client(scanner, writer);
+        TTT_Client client = new TTT_Client();
     }
 }
