@@ -1,0 +1,25 @@
+
+## RULES ##
+## To win the game you must get FIVE counters in a continuous row. ##
+## Rows can be horizontal, vertical, or diagonal ##
+## ENJOY! ##
+
+Please Enter your NAME: 
+
+[ Enter number 1 to play as X's OR 2 to play as O's ]
+You will be playing as X's
+ADAM
+
+[_] [_] [_] [_] [_] [_] [_] [_] [_] 
+[_] [_] [_] [_] [_] [_] [_] [_] [_] 
+[_] [_] [_] [_] [_] [_] [_] [_] [_] 
+[_] [_] [_] [_] [_] [_] [_] [_] [_] 
+[_] [_] [_] [_] [_] [_] [_] [_] [_] 
+[_] [_] [_] [_] [_] [_] [_] [_] [_] 
+
+[_] [_] [_] [_] [_] [_] [_] [_] [_] 
+[_] [_] [_] [_] [_] [_] [_] [_] [_] 
+[_] [_] [_] [_] [_] [_] [_] [_] [_] 
+[_] [_] [_] [_] [O] [_] [_] [_] [_] 
+[_] [_] [_] [_] [_] [_] [_] [_] [_] 
+[_] [_] [_] [_] [_] [_] [_] [_] [_] 

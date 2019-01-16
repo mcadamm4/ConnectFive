@@ -7,10 +7,10 @@ import java.util.Scanner;
 import static org.junit.Assert.*;
 
 
-public class TTT_ServerTest {
+public class CF_ServerTest {
     @org.junit.Test
     public void testTest() {
-//        TTT_Server server = new TTT_Server();
+//        CF_Server server = new CF_Server();
 //        Scanner scanner1, scanner2;
 //        PrintWriter writer1, writer2;
 //        try {
@@ -23,7 +23,7 @@ public class TTT_ServerTest {
 //
 //            writer1.println("Hello World");
 //
-//            TTT_Client client1 = new TTT_Client(scanner1, writer1);
+//            CF_Client client1 = new CF_Client(scanner1, writer1);
 //            writer1.close();
 //
 //        } catch (Exception e) {

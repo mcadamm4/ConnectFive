@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
 
-public class TTT_Server {
+public class CF_Server {
     private static final int PORT = 9090;
 
     public static void main(String[] args) throws Exception {
@@ -38,6 +38,7 @@ class ConnectFive {
 
     Player activePlayer;
     private static int playerCount = 0;
+    private static int countersOnBoard = 0;
 
     private static final int BOARD_WIDTH = 9; // Easily alter the rules of the game via these values
     private static final int BOARD_HEIGHT = 6;
@@ -127,12 +128,23 @@ class ConnectFive {
 
         private void play() throws Exception {
             boolean gameInProgress = true;
+
             while(gameInProgress) {
                 // Who's move is it
+                if(countersOnBoard == (BOARD_HEIGHT*BOARD_WIDTH)) {
+                    out.println("STALEMATE");
+                    opponent.out.println("STALEMATE");
+                }
                 if(this.equals(activePlayer)) {
                     out.println("MAKE_A_MOVE");
-                    int selectedColumn = Integer.parseInt(in.readLine())-1;
+                    String clientResponse = in.readLine();
 
+                    if(clientResponse.toUpperCase().equals("Q")) {
+                        out.println("GAME_OVER");
+                        opponent.out.println("OPPONENT_QUIT");
+                        break;
+                    }
+                    int selectedColumn = Integer.parseInt(clientResponse)-1;
                     if (isValidMove(selectedColumn)) {
                         int[] dropCoords = getDropCoords(selectedColumn);
 
@@ -159,14 +171,11 @@ class ConnectFive {
 
                             // Opponents turn has begun
                             activePlayer = this.opponent;
+                            countersOnBoard++;
                         }
                     } else {
                         // Selected column is already full
                         out.println("INVALID_MOVE");
-                    }
-
-                    if(!gameInProgress) {
-                        out.println("GAME_OVER");
                     }
                 } else {
                     out.println("NOT_YOUR_TURN");

@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class TTT_Client {
+public class CF_Client {
     private BufferedReader in;
     private PrintWriter out;
     private static final String HOST = "localhost";
@@ -23,9 +23,10 @@ public class TTT_Client {
 
     private String playerChip;
     private String opponentChip;
+    private boolean testingFlag = false;
 
     //    Construct a client and connects to the server
-    TTT_Client() {
+    private CF_Client() {
         this.scanner = new Scanner(System.in);
         this.writer = new PrintWriter(System.out, true);
         // Setup connection to server
@@ -35,12 +36,18 @@ public class TTT_Client {
             getGameReady();
         } catch (Exception e) {
             writer.println("COULD NOT CONNECT TO SERVER!!");
+
+            writer.close();
+            out.close();
         }
     }
 
-    TTT_Client(Scanner scanner, PrintWriter writer, BufferedReader inputStream, PrintWriter outputStream) {
+    CF_Client(Scanner scanner, PrintWriter writer, BufferedReader inputStream, PrintWriter outputStream) {
         this.scanner = scanner;
         this.writer = writer;
+
+        // Forces the client to stop after one move
+        testingFlag = true;
         // Mock server connection for testing purposes
         try {
             in = inputStream;
@@ -94,7 +101,7 @@ public class TTT_Client {
         opponentChip = playerChip.equals("X") ? "O" : "X";
     }
 
-    private void playGame() throws IOException {
+    private synchronized void playGame() throws IOException {
         String instructions;
         while (true) {
             if (in.ready()) {
@@ -103,11 +110,15 @@ public class TTT_Client {
                 if (instructions.startsWith("MAKE_A_MOVE")) {
                     try {
                         // Prompt for move
-                        writer.println("IT IS YOUR TURN, ENTER A NUMBER BETWEEN [1-9]! - YOU ARE " + playerChip + "'s");
-                        Scanner scanner1 = new Scanner(System.in);
-                        int move = scanner1.nextInt();
-                        out.println(move);
-
+                        writer.println("IT IS YOUR TURN, ENTER A NUMBER BETWEEN [1-9]! - YOU ARE " + playerChip + "'s\n" + "ENTER Q TO QUIT THE GAME!!");
+                        String input = scanner.nextLine();
+                        if(input.toUpperCase().equals("Q")) {
+                            out.println(input);
+                            continue;
+                        } else {
+                            int move = Integer.parseInt(input);
+                            out.println(move);
+                        }
                         // Valid move, Invalid move or Winning move
                         String playerMoveResponse = in.readLine();
 
@@ -122,10 +133,12 @@ public class TTT_Client {
                             updateBoard(x, y, playerChip);
                             displayBoard();
                             writer.println("Opponents move, please wait!\n");
-
                         } else if (playerMoveResponse.startsWith("WINNER")) {
-                            String message = "\n  CONGRATULATIONS!! \nYou have won the game, %s!!";
+                            String message = "\nCONGRATULATIONS!! You have won the game, %s!!";
                             declareWinnerLoser(playerMoveResponse, playerChip, message);
+
+                            writer.close();
+                            out.close();
                             break;
                         }
                     } catch (Exception e) {
@@ -145,14 +158,37 @@ public class TTT_Client {
                     displayBoard();
 
                 } else if (instructions.startsWith("WINNER")) {
-                    String message = "\n  YOU LOOOOOSE!! \n%s has won the game ya crumb!!";
+                    String message = "\nYOU LOSE!! %s has won the game!!";
                     declareWinnerLoser(instructions, opponentChip, message);
+
+                    writer.close();
+                    out.close();
                     break;
 
+                } else if (instructions.startsWith("OPPONENT_QUIT")) {
+                    writer.println("Your opponent has quit the game!!");
+
+                    writer.close();
+                    out.close();
+                    break;
                 } else if (instructions.startsWith("GAME_OVER")) {
-                    System.out.print(instructions);
+                    writer.println("You have quit the game!!");
+
+                    writer.close();
+                    out.close();
+                    break;
+                } else if (instructions.startsWith("STALEMATE")) {
+                    writer.println("The board is full!! Nobody Wins!!");
+
+                    writer.close();
+                    out.close();
                     break;
                 }
+            }
+            if (testingFlag) {
+                writer.close();
+                out.close();
+                break;
             }
         }
     }
@@ -179,8 +215,14 @@ public class TTT_Client {
                 }
             } catch (NumberFormatException e) {
                 writer.println("ERROR: " + e);
+
+                writer.close();
+                out.close();
             } catch (Exception e) {
                 writer.println("Error trying to find opponent...");
+
+                writer.close();
+                out.close();
             }
         }
     }
@@ -195,8 +237,7 @@ public class TTT_Client {
             try {
                 writer.println("\n[ Enter number 1 to play as X's OR 2 to play as O's ]");
 
-                Scanner scanner =new Scanner(System.in);
-                chipSelection = scanner.nextInt();
+                chipSelection = Integer.parseInt(scanner.nextLine());
                 if (chipSelection == 1 || chipSelection == 2)
                     break;
                 writer.println(chipSelection + " is an invalid number!");
@@ -224,6 +265,21 @@ public class TTT_Client {
     }
 
     public static void main(String[] args) throws Exception {
-        TTT_Client client = new TTT_Client();
+        CF_Client client = new CF_Client();
+    }
+
+
+    // GETTERS & MANIPULATOR METHODS
+
+    public String[][] getBoard() {
+        return board;
+    }
+
+    public String getPlayerChip() {
+        return playerChip;
+    }
+
+    public String getOpponentChip() {
+        return opponentChip;
     }
 }
