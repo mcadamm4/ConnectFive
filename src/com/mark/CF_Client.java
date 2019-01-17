@@ -146,9 +146,7 @@ public class CF_Client {
                     }
 
                 } else if (instructions.startsWith("NOT_YOUR_TURN")) {
-                    System.out.print("...");
-                    System.out.print("\b\b\b");
-
+                    continue;
                 } else if (instructions.startsWith("OPPONENT_MOVED")) {
                     int x = Integer.parseInt(String.valueOf(instructions.charAt(15)));
                     int y = Integer.parseInt(String.valueOf(instructions.charAt(17)));
