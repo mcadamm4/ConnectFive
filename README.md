@@ -6,17 +6,17 @@ In the folder "ZIP" folder is a zip file containing
     CF_Client.java
     
 1) Please download and extract this zip file.
-2) Compile each of the files using 
+2) Compile the files using the following command,
 
-    *'javac [filename].java'*
+    *'javac **.java'*
 
 
 3) Open three separate Command line windows in the directory containing the files.
-4) In one window, run
+4) In one window, run the server,
 
     *'java CF_Server'*
     
-5) In the other two windows, run
+5) In the other two windows, run a client each,
 
     *'java CF_Client'*
     
